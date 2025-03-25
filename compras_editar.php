@@ -6,21 +6,23 @@ require('inc/banco.php');
 $id = $_GET['id'] ?? null;
 
 
-echo $twig->render('compras_editar.html', [
-    'id' => $id 
-]);
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $id) {
+    $id = $_GET['id'] ?? null; 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
-    $item = $_POST['item'] ?? null; 
-
-    if ($item) {
-        $query = $pdo->prepare('UPDATE compras SET item = :item WHERE id = :id');
-        
-        $query->execute([
-            ':item' => $item,
-            ':id' => $id
+    if ($id) {
+        $item = $pdo->prepare('SELECT * FROM compras WHERE id = :id');
+        $item->execute([':id'=>$id]);
+        $dados = $item->fetch();
+        echo $twig->render('compras_editar.html', [
+            'titulo' => 'compras',
+            'dados' => $dados,
         ]);
-
-        header('Location: compras.php');
     } 
+} else{
+    $edit = $pdo->prepare('UPDATE compras SET item = :item WHERE id = :id');
+    $edit->execute([
+        ':item' => $_POST['item'],
+        ':id' => $_POST['id']
+    ]);
+    header('Location:compras.php');
 }
