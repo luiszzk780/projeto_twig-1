@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+
+{% block conteudo %}
+Página de compromissos
+
+<h3>Adicionar compromissos</h3>
+<form action="compromissos_adc.php" method="post">
+<input type="text" name="titulo" placeholder="Título do compromisso">
+<br>
+<input type="date" name="date">
+<br>
+<input type="submit" value="Adicionar">
+</form>
+
+<h3>Minha lista de compromissos</h3>
+<form action="compromissos.php" method="get">
+    s
+</form>
+<ul>
+    <li style="list-style: none;">Lista de compromissos:</li>
+    {% for compromisso in compromissos %}
+        <li>
+            {{ compromisso.titulo }} <br>
+            {{compromisso.data}} <br>
+            <a href="compromissos_editar.php?id={{compromisso.id}}">Editar item</a> <br>
+            <a href="compromissos_apagar.php?id={{compromisso.id}}">Apagar item</a> <br><br>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

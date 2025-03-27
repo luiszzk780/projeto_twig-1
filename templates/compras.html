@@ -5,7 +5,7 @@ Página de compras
 
 <h3>Adicionar item</h3>
 <form action="compras_adc.php" method="post">
-<input type="text" name="item" placeholder="Escreva o nome do item">
+<input type="text" name="item" placeholder="Escreva o nome do item"> <br>
 <input type="submit" value="Adicionar">
 </form>
 
@@ -14,7 +14,11 @@ Página de compras
 <ul>
     <li style="list-style: none;">Itens</li>
     {% for compra in compras %}
-        <li>{{ compra.item }} <a href="compras_editar.php?id={{compra.id}}">Editar item</a><a href="compras_apagar.php?id={{compra.id}}">Apagar item</a></li>
+        <li>
+            {{ compra.item }} <br>
+            <a href="compras_editar.php?id={{compra.id}}">Editar item</a> <br>
+            <a href="compras_apagar.php?id={{compra.id}}">Apagar item</a>
+        </li>
     {% endfor %}
 </ul>
 
