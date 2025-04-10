@@ -1,29 +1,35 @@
 {% extends "_base.html" %}
 
 {% block conteudo %}
-Página de compromissos
 
-<h3>Adicionar compromissos</h3>
+<h3>Adicionar compromisso</h3>
 <form action="compromissos_adc.php" method="post">
-<input type="text" name="titulo" placeholder="Título do compromisso">
-<br>
-<input type="date" name="date">
-<br>
-<input type="submit" value="Adicionar">
+    <input type="text" name="titulo" placeholder="Escreva o titulo">
+    <input type="date" name="data">
+
+    <input type="submit" value="Adicionar">
 </form>
 
 <h3>Minha lista de compromissos</h3>
-<form action="compromissos.php" method="get">
-    s
-</form>
+
+<h4>Ordenar</h4>
+    <a href="compromissos.php?data=recente">Mais próximo</a> | 
+    <a href="compromissos.php?data=distante">Mais distante</a> |
+    <a href="compromissos.php?data=alfabeto">Ordem alfabética</a>
 <ul>
-    <li style="list-style: none;">Lista de compromissos:</li>
     {% for compromisso in compromissos %}
         <li>
-            {{ compromisso.titulo }} <br>
-            {{compromisso.data}} <br>
-            <a href="compromissos_editar.php?id={{compromisso.id}}">Editar item</a> <br>
-            <a href="compromissos_apagar.php?id={{compromisso.id}}">Apagar item</a> <br><br>
+            {{ compromisso.titulo }}
+            |
+            {{ compromisso.data }}
+            |
+            {% if compromisso.final_de_semana %}
+            Final de semana
+            |
+            {% endif %}
+            <a href="compromissos_editar.php?id={{ compromisso.id }}">Editar</a>
+            |
+            <a href="compromissos_apagar.php?id={{ compromisso.id }}">X</a>
         </li>
     {% endfor %}
 </ul>

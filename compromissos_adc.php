@@ -3,14 +3,16 @@
 require('inc/banco.php');
 
 $titulo = $_POST['titulo'] ?? null;
-$date = $_POST['date'] ?? null;
+$data = $_POST['data'] ?? null;
 
-if($titulo && $date){
-    $query = $pdo->prepare('INSERT INTO compromissos(titulo, data) VALUES (:titulo, :date)');
+if($titulo){
+    //prepara a consulta
+    $query = $pdo->prepare('INSERT INTO compromissos (titulo, data) VALUES (:titulo, :data)');
 
+    //executa a consulta
     $query->execute([
-        ':titulo'=> $titulo,
-        ':date' => $date
+        ':titulo' => $titulo,
+        ':data' => $data
     ]);
 }
 

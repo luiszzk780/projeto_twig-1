@@ -1,29 +1,28 @@
 <?php
-
+# compras_editar.php
 require_once('twig_carregar.php');
 require('inc/banco.php');
 
-$id = $_GET['id'] ?? null;
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && $id) {
-    $id = $_GET['id'] ?? null; 
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $id = $_GET['id'] ?? null;
 
     if ($id) {
-        $compromisso = $pdo->prepare('SELECT * FROM compromissos WHERE id = :id');
-        $compromisso->execute([':id'=>$id]);
-        $dados = $compromisso->fetch();
+        $titulo = $pdo->prepare('SELECT * FROM compromissos WHERE id = :id');
+        $titulo->execute([':id' => $id]);
+        $compromissos = $titulo->fetch();
+
         echo $twig->render('compromissos_editar.html', [
-            'titulo' => 'Editar compromisso',
-            'dados' => $dados,
+            'titulo' => 'Compromissos',
+            'compromissos' => $compromissos,
         ]);
-    } 
-} else{
-    $edit = $pdo->prepare('UPDATE compromissos SET titulo = :titulo, data = :date WHERE id = :id');
+    }
+}
+else {
+    $edit = $pdo->prepare('UPDATE compromissos SET titulo = :titulo, data = :data WHERE id = :id');
     $edit->execute([
         ':titulo' => $_POST['titulo'],
-        ':date' => $_POST['date'],
-        ':id' => $_POST['id']
+        ':data' => $_POST['data'],
+        ':id' => $_POST['id'],
     ]);
-    header('Location:compromissos.php');
+    header('location:compromissos.php');
 }
